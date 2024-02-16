@@ -1,0 +1,17 @@
+Php files 
+1. connection.php
+
+declare 4 constant variables to store the database connection parameters
+use mysql connection method
+check if connection worked
+use the die() function if connection fails and display error.
+
+2. select_role.php
+
+ include the connection file
+write a select query on the "family_name" table
+execute the query using the connection
+ check if execution worked
+fetch the results
+ use the results to build the family role dropdown on the register page
+

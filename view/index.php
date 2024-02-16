@@ -1,3 +1,4 @@
+
 <span style="font-family: verdana, geneva, sans-serif;">
     <!DOCTYPE html>
     <html lang="en">
@@ -5,7 +6,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Welcome Page</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="home(user)/style.css" />
         <!-- Font Awesome Cdn Link -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     </head>
@@ -45,7 +46,7 @@
                 </div>
                 <div class="users">
                     <div onclick="redirectToChorePage()" class="card">
-                        <img src="pic1.webp">
+                        <img src="../images/pic1.webp">
                         <h4>Work In-Progress</h4>
                         <h4><i>50</i></h4>
                         <p> Last activity</p>
@@ -64,7 +65,7 @@
                         <button>More Infos</button>
                     </div>
                     <div onclick="redirectToChorePage()" class="card">
-                        <img src="pic2.webp">
+                        <img src="../images/pic2.webp">
                         <h4>Pending Tasks</h4>
                         <h4><i>50</i></h4>
                         <p> Last activity</p>
@@ -83,7 +84,7 @@
                         <button>More Infos</button>
                     </div>
                     <div onclick="redirectToChorePage()" class="card">
-                        <img src="pic4.png">
+                        <img src="../images/pic4.png">
                         <h4>Incomplete Tasks</h4>
                         <h4><i>50</i></h4>
                         <p> Last activity</p>
@@ -102,7 +103,7 @@
                         <button>More Infos</button>
                     </div>
                     <div onclick="redirectToChorePage()" class="card">
-                        <img src="pic3.jpg">
+                        <img src="../images/pic3.jpg">
                         <h4>Completed Tasks</h4>
                         <h4><i>50</i></h4>
                         <p> Last activity</p>
