@@ -9,4 +9,9 @@ function checkLogin() {
         die();
     }
 }
+  // Check if user id session exists
+  if (!isset($_SESSION['roleId'])) {
+    header('Location: ../login/login_view.php');    
+    die();
+  }
 ?>

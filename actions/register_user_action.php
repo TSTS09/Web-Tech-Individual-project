@@ -17,13 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if email is already in use
-    $sql = "SELECT email FROM People WHERE email = '$email'";
-    $result = $conn->query($sql);
+    $sql = "SELECT email FROM People WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if ($result && $result->num_rows > 0) {
+    if ($stmt->num_rows > 0) {
+        $stmt->close();
         header('Location: ../login/login_view.php?error=Email already exists. Please use another one.');
         exit();
     }
+
+    $stmt->close();
 
     $sql = "INSERT INTO People (rid, fid, fname, lname, gender, dob, tel, email, passwd) VALUES ('$rid','$familyRole','$firstName', '$lastName', '$gender', '$dob', '$phoneNumber', '$email', '$hashedPassword')";
 

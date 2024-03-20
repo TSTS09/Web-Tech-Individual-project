@@ -29,7 +29,7 @@
                             <i class="fas fa-chart-bar"></i>
                             <span class="nav-item">Manage Chores</span>
                         </a></li>
-                    <li><a href="#" class="logout">
+                    <li><a href="logout_view.php" class="logout">
                             <i class="fas fa-sign-out-alt"></i>
                             <span class="nav-item">Log out</span>
                         </a></li>
