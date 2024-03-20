@@ -1,24 +1,22 @@
 <?php
 include '../settings/connection.php';
 
-function getAllChores() {
+function getAllChores()
+{
     global $conn;
-    $chores = [];
-    
+    $chores = array();
     $sql = "SELECT * FROM Chores";
+    $result = $conn->query("$sql");
     
-    $result = $conn->query($sql);
-    
-    if ($result) {
+    if (!$result) {
+        echo "Error: " . $conn->error;
+    } else {
         if ($result->num_rows > 0) {
-            $chores = array(); 
             while ($row = $result->fetch_assoc()) {
                 $chores[] = $row;
             }
             return $chores;
         }
     }
- 
+    $conn->close();
 }
-$conn->close();
-

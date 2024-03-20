@@ -10,7 +10,6 @@ if ((isset($_SERVER['REQUEST_METHOD']) == "POST") && isset($_POST['signInButton'
     $password = $_POST['passwordInput'];
    
     $sql = "SELECT * FROM People WHERE email = '$email'";
-    echo "bkjhjv";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
@@ -19,7 +18,7 @@ if ((isset($_SERVER['REQUEST_METHOD']) == "POST") && isset($_POST['signInButton'
             $_SESSION['userId'] = $row['pid'];
             $_SESSION['roleId'] = $row['rid'];
 
-            header('Location: ../view/index.php');
+            header('Location: ../view2/chore_control_view.php');
             exit();
 
         } else {

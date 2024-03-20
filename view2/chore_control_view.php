@@ -1,8 +1,3 @@
-<?php
-include '../settings/core.php';
-include '../functions/chore_fxn.php'
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +51,9 @@ include '../functions/chore_fxn.php'
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="chores-list"></tbody>
+                    <tbody id="chores-list">
+                        <?php include '../functions/chore_fxn.php'; ?>
+                    </tbody>
                 </table>
             </div>
             <div class="modal" id="add-chore-modal">
@@ -70,30 +67,15 @@ include '../functions/chore_fxn.php'
                     </form>
                 </div>
             </div>
-            <div class="modal" id="edit-chore-modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Edit Chore</h2>
-                    <form action="" method="post" id="edit-chore-form">
-                        <input type="hidden" name="chore-id" id="edit-chore-id">
-                        <label for="edit-chore-name">Chore Name:</label>
-                        <input type="text" name="edit-chore-name" id="edit-chore-name" required>
-                        <button type="submit" name="submit" class="add-chore-btn" id="add-chore-btn">Save Changes</button>
-                    </form>
-                </div>
-            </div>
+            
         </section>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const choresList = document.getElementById("chores-list");
             const addChoreBtn = document.getElementById("add-chore-btn");
             const modal = document.getElementById("add-chore-modal");
             const closeModalBtn = document.querySelector(".modal .close");
-
-            const editChoreModal = document.getElementById("edit-chore-modal");
-            const closeEditChoreModalBtn = document.querySelector("#edit-chore-modal .close");
 
             // Add event listener to the add chore button
             addChoreBtn.addEventListener("click", () => {
@@ -104,131 +86,6 @@ include '../functions/chore_fxn.php'
             closeModalBtn.addEventListener("click", () => {
                 modal.style.display = "none";
             });
-
-            // Add event listener to the close button of edit chore modal
-            closeEditChoreModalBtn.addEventListener("click", () => {
-                editChoreModal.style.display = "none";
-            });
-
-            // Add event listener to the chore form for adding a new chore
-            const choreForm = document.getElementById("chore-form");
-            choreForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-
-                // Get the chore name from the form
-                const choreName = document.getElementById("chore-name").value;
-
-                // Create a new chore object
-                const chore = {
-                    name: choreName
-                };
-
-                // Add the new chore to the table
-                const newRow = createChoreRow(choresList.children.length + 1, chore);
-                choresList.appendChild(newRow);
-
-                // Clear the chore name field
-                clearChoreForm();
-
-                // Close the add chore modal
-                modal.style.display = "none";
-
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", "../actions/add_chore_action.php", true);
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        const choreId = parseInt(xhr.responseText);
-                        const chore = {
-                            name: choreName
-                        };
-                        const newRow = createChoreRow(choreId, chore);
-                        choresList.appendChild(newRow);
-                        clearChoreForm();
-                        modal.style.display = "none";
-                    }
-                };
-
-                xhr.send("chore-name=" + encodeURIComponent(choreName));
-            });
-            // Add event listener to the chores list to handle delete and edit button clicks
-            choresList.addEventListener("click", (event) => {
-                if (event.target.classList.contains("delete-chore-btn")) {
-                    // Handle delete button click
-                    deleteChore(event);
-                } else if (event.target.classList.contains("edit-chore-btn")) {
-                    // Handle edit button click
-                    openEditChoreModal(event);
-                }
-            });
-
-            // Add event listener to the edit chore form for saving changes
-            const editChoreForm = document.getElementById("edit-chore-form");
-            editChoreForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-
-                // Get the edited chore information from the form
-                const choreId = document.getElementById("edit-chore-id").value;
-                const editedChore = {
-                    name: document.getElementById("edit-chore-name").value
-                };
-
-                // Update the table with the edited chore information
-                updateChoreRow(choreId, editedChore);
-
-                // Close the edit chore modal
-                editChoreModal.style.display = "none";
-            });
-
-            // Function to create a new row for a chore in the table
-            function createChoreRow(choreId, chore) {
-                const newRow = document.createElement("tr");
-                newRow.id = `chore-row-${choreId}`;
-                newRow.innerHTML = `
-          <td>${choreId}</td>
-          <td>${chore.name}</td>
-          <td>
-            <button class="edit-chore-btn" id="edit-chore-btn-${choreId}">Edit</button>
-            <button class="delete-chore-btn" id="delete-chore-btn-${choreId}">Delete</button>
-          </td>
-        `;
-                return newRow;
-            }
-
-            // Function to clear the add chore form fields
-            function clearChoreForm() {
-                document.getElementById("chore-name").value = "";
-            }
-
-            // Function to delete a chore from the table
-            function deleteChore(event) {
-                const choreId = event.target.id.split("-")[3];
-                const choreRow = event.target.parentElement.parentElement;
-
-                // Remove the chore from the table
-                choresList.removeChild(choreRow);
-            }
-
-            // Function to open the edit chore modal with the current chore information
-            function openEditChoreModal(event) {
-                const choreId = event.target.id.split("-")[3];
-                const choreRow = event.target.parentElement.parentElement;
-                const choreName = choreRow.children[1].textContent;
-
-                // Set the current chore information in the edit chore form
-                document.getElementById("edit-chore-id").value = choreId;
-                document.getElementById("edit-chore-name").value = choreName;
-
-                // Open the edit chore modal
-                editChoreModal.style.display = "block";
-            }
-
-            // Function to update the table with edited chore information
-            function updateChoreRow(choreId, editedChore) {
-                const choreRow = document.getElementById(`chore-row-${choreId}`);
-                choreRow.children[1].textContent = editedChore.name;
-            }
         });
     </script>
 </body>
