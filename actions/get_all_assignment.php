@@ -1,11 +1,10 @@
 <?php
-include_once '../settings/connection.php';
-
-function getAllChores()
+include_once "../settings/connection.php";
+function get_all_assignment()
 {
     global $conn;
     $chores = array();
-    $sql = "SELECT * FROM Chores";
+    $sql = "SELECT * FROM Assignment";
     $result = $conn->query("$sql");
     
     if (!$result) {

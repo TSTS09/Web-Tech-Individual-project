@@ -1,6 +1,6 @@
 <?php
 // Include the connection file
-include '../settings/connection.php';
+include_once '../settings/connection.php';
 
 // Check if chore_id is set in the GET URL
 if(isset($_GET['chore_id'])) {
@@ -13,7 +13,7 @@ if(isset($_GET['chore_id'])) {
     // Execute the query
     if ($conn->query($sql) === TRUE) {
         // Redirect to chore display page if deletion was successful
-        header('Location: ../view2/chore_control_view.php');
+        header('Location: ../view/chore_control_view.php');
         exit();
     } else {
         // Display error message if deletion failed
@@ -21,7 +21,7 @@ if(isset($_GET['chore_id'])) {
     }
 } else {
     // Redirect to chore display page if chore_id is not set in the GET URL
-    header('Location: ../view2/chore_control_view.php');
+    header('Location: ../view/chore_control_view.php');
     exit();
 }
 

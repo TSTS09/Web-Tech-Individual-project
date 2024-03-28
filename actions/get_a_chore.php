@@ -1,5 +1,5 @@
 <?php 
-include '../settings/connection.php';
+include_once '../settings/connection.php';
 function getChoreById($id) {
     global $conn;
     $sql = "SELECT * FROM Chores WHERE choreID = $id";

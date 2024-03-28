@@ -17,15 +17,15 @@
                         <img src="../images/Chorus.png">
                         <span class="nav-item">Admin 1</span>
                     </a></li>
-                <li><a href="/home(admin)/home.html">
+                <li><a href="#">
                         <i class="fas fa-menorah"></i>
                         <span class="nav-item">Dashboard</span>
                     </a></li>
-                <li><a href="/home(admin)/Chores-management/page.html">
+                <li><a href="chore_control_view.php">
                         <i class="fas fa-chart-bar"></i>
                         <span class="nav-item">Chores Management</span>
                     </a></li>
-                <li><a href="/home(admin)/Chores-Assignment/page.html">
+                <li><a href="../admin/assign_chore_view.php">
                         <i class="fas fa-database"></i>
                         <span class="nav-item">Chores Assignment</span>
                     </a></li>
@@ -67,10 +67,34 @@
                     </form>
                 </div>
             </div>
-            
+
         </section>
     </div>
+    <div class="modal" id="edit-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close eclose">&times;</span>
+            <h2>Edit Chore</h2>
+            <form action="../actions/edit_a_chore_action.php" method="post">
+                <input type="hidden" id="edit_chore_id" name="chore-id" value="">
+                <label for="edit-chore-name">Chore Name:</label>
+                <input type="text" id="edit-chore-name" name="chore-name" value="" required>
+                <button class="add-chore-btn" type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
 
+    <script>
+        function editChore(id, name) {
+            var option = document.getElementById('selected');
+            document.getElementById('edit_chore_id').value = id;
+            document.getElementById('edit-chore-name').value = name;
+            document.getElementById('edit-modal').style.display = 'block';
+        }
+
+        document.querySelector('.modal .eclose').addEventListener('click', function() {
+            document.getElementById('edit-modal').style.display = 'none';
+        });
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const addChoreBtn = document.getElementById("add-chore-btn");
@@ -85,6 +109,17 @@
             // Add event listener to the close button of add chore modal
             closeModalBtn.addEventListener("click", () => {
                 modal.style.display = "none";
+            });
+
+            function editChore(id, name) {
+                var option = document.getElementById('selected');
+                document.getElementById('edit_chore_id').value = id;
+                document.getElementById('edit-chore-name').value = name;
+                document.getElementById('edit-modal').style.display = 'block';
+            }
+
+            document.querySelector('.modal .eclose').addEventListener('click', function() {
+                document.getElementById('edit-modal').style.display = 'none';
             });
         });
     </script>

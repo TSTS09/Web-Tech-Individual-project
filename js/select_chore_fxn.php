@@ -3,9 +3,9 @@
 include_once '../settings/connection.php';
 
 // Initialize an empty string to store the options HTML
-$options = '';
+$choreOptions = '';
 
-$sql = "SELECT * FROM `Family_name`";
+$sql = "SELECT cid, chorename FROM Chores WHERE cid NOT IN (SELECT cid FROM Assignment)";
 
 // Execute the query using the connection
 $result = $conn->query($sql);
@@ -14,8 +14,8 @@ $result = $conn->query($sql);
 if ($result) {
     // Fetch the results
     while ($row = $result->fetch_assoc()) {
-        // Build the options HTML using the fetched roles
-        $options .= "<option value=\"" . $row['fid'] . "\">" . $row['fam_name'] . "</option>";
+        // Build the choreOptions HTML using the fetched roles
+        $choreOptions .= "<option value=\"" . $row['cid'] . "\">" . $row['chorename'] . "</option>";
     }
 } else {
     // If query execution failed, handle the error

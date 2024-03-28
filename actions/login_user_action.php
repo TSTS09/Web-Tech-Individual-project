@@ -2,7 +2,7 @@
 
 session_start();
 
-include '../settings/connection.php';
+include_once '../settings/connection.php';
 
 if ((isset($_SERVER['REQUEST_METHOD']) == "POST") && isset($_POST['signInButton'])) {
 
@@ -18,20 +18,26 @@ if ((isset($_SERVER['REQUEST_METHOD']) == "POST") && isset($_POST['signInButton'
             $_SESSION['userId'] = $row['pid'];
             $_SESSION['roleId'] = $row['rid'];
 
-            header('Location: ../view2/chore_control_view.php');
+            header('Location: ../view/chore_control_view.php');
             exit();
 
         } else {
-            echo "Incorrect username or password. Please try again.";
-            header('Location: ../login/login_view.php');
+            echo "<script>
+        alert('Incorrect username or password. Please try again.');
+        window.location.href='../view/login_view.php?msg=Incorrect username or password. Please try again.'
+        </script>";
+            // header('Location: ../view/login_view.php');
         }
     } else {
-        echo "User not registered or incorrect username or password, Please try again.";
-        header('Location: ../login/login_view.php');
-        exit();
+        echo "<script>
+        alert('User does not exist, Please try again or register on the next page.');
+        window.location.href='../view/register_view.php?error=User not registered or incorrect username or password, Please try again.'
+        </script>";
+        // header('Location: ../view/login_view.php');
+        // exit();
     }
 } else {
-    header('Location: ../login/login_view.php');
+    header('Location: ../view/login_view.php');
     exit();
 }
 

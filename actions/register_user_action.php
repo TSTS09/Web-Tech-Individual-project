@@ -1,7 +1,7 @@
 
 <?php
 // Include the connection file
-include '../settings/connection.php';
+include_once '../settings/connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = $_POST['firstName'];
@@ -25,8 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         $stmt->close();
-        header('Location: ../login/login_view.php?error=Email already exists. Please use another one.');
-        exit();
+        echo "<script>
+        alert('Email already exists. Please use another one or login in the next page');
+        window.location.href='../view/login_view.php?error=Email already exists. Please use another one.'
+        </script>";
+        // header('Location: ../view/login_view.php?error=Email already exists. Please use another one.');
+        // exit();
     }
 
     $stmt->close();
@@ -38,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result) {
         echo "Sucessful Registration";
-        header('Location: ../login/login_view.php');
+        header('Location: ../view/login_view.php');
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -46,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     // If form is not submitted, redirect to register view page or take appropriate action
     echo 'error';
-    header('Location: ../login/register_view.php');
+    header('Location: ../view/register_view.php');
     exit();
 }
 
